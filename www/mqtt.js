@@ -14,7 +14,8 @@ var mqtt={
   will: null,
   cache: null,
 	reconnectInterval: 5,
-	cacheSendInterval: 10,
+  cacheSendInterval: 10,
+  userDisconnected: false,
   init: function(options){
     mqtt.host = required(options.host);      
     mqtt.port = optional(options.port, 1883);      
@@ -146,11 +147,12 @@ var mqtt={
 	},
 
   _connect: function(success, error){
+    mqtt.userDisconnected = false;
     cordova.exec(success, error, "MQTTPlugin", "connect", [mqtt.host, mqtt.port, mqtt.options]);
   },
 
 	_reconnect: function(){
-		mqtt.disconnect();
+		mqtt._disconnect();
 		console.log("Trying to Reconnect...");
 		mqtt._connect(
 			function connectSuccess(){
@@ -166,7 +168,12 @@ var mqtt={
 		);
 	},
 
-  disconnect: function(){
+  disconnect: function () {
+    mqtt.userDisconnected = true;
+    mqtt._disconnect();
+  },
+
+  _disconnect: function(){
     cordova.exec(
       function(success){
         console.log("Disconnected.");
@@ -391,7 +398,10 @@ var mqtt={
 		console.log("Hi i am online");
   },
   onOffline: function(){ 
-		mqtt._reconnect();
+    if(!mqtt.userDisconnected) 
+    {
+      mqtt._reconnect();
+    }
   },
 
   onError: function(){ 
@@ -426,7 +436,6 @@ var mqtt={
 		console.log("Network Connection is: "+ states[navigator.connection.type]);
 		return (navigator.connection.type != Connection.NONE);
 	}
-
 }
 
 function optional(obj, def){
