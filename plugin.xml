@@ -7,11 +7,12 @@
   <keywords>mqtt, iot, push, notification</keywords>
   <repo>https://github.com/fastrde/cordova-plugin-fastrde-mqtt.git</repo>
   <issue>https://github.com/fastrde/cordova-plugin-fastrde-mqtt/issues</issue>
-	<dependency id="cordova-sqlite-storage" version="0.7.14" />
-	<dependency id="cordova-plugin-network-information" version="1.1.0" />
-  <js-module src="www/mqtt.js" name="mqtt">
-    <clobbers target="mqtt" />
-  </js-module>
+
+
+    <js-module src="www/mqtt.js" name="mqtt">
+        <clobbers target="window.mqtt" />
+    </js-module>
+ 
   <!-- ios -->
   <platform name="ios">
     <config-file target="config.xml" parent="/*">
@@ -35,10 +36,5 @@
         <param name="android-package" value="de.fastr.cordova.plugin.MQTTPlugin"/>
       </feature>
     </config-file>
-		<config-file target="AndroidManifest.xml" parent="/manifest">
-			<uses-permission android:name="android.permission.INTERNET" />
-			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-   	</config-file>
   </platform>
 </plugin>
