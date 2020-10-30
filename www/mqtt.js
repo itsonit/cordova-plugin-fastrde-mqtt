@@ -52,9 +52,9 @@ var mqtt={
                 console.log("Created");
 								document.addEventListener("online", mqtt.onOnline, false);
 								document.addEventListener("offline", mqtt.onOffline, false);
-								if (!mqtt.isOnline()){
-									mqtt._reconnect();
-								}
+								//if (!mqtt.isOnline()){
+								//	mqtt._reconnect();
+								//}
 								mqtt.onInit();			
               },
               function createError(){
