@@ -130,20 +130,7 @@ var mqtt={
   },
 
 	connect: function(){
-    if (mqtt.host == null){
-      console.error("You have to call init before you connect");
-      return;
-    }
-		mqtt._connect(
-      function(success){
-        console.log("Connected.");
-				mqtt._resendCached();
-        mqtt.onConnect();
-      }, 
-      function(err) {
-        mqtt.onConnectError();
-      } 
-		)
+    this._reconnect();
 	},
 
   _connect: function(success, error){
