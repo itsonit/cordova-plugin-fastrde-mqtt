@@ -13,7 +13,7 @@ var mqtt={
   protocol: null, 
   will: null,
   cache: null,
-	reconnectInterval: 5,
+	reconnectInterval: 2,
   cacheSendInterval: 10,
   userDisconnected: false,
   init: function(options){
